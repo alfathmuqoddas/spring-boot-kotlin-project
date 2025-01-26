@@ -9,11 +9,14 @@ data class Product(
     val id: Long = 0,
 
     @Column(nullable = false)
-    val name: String,
+    val name: String = "",
 
     @Column(nullable = false)
-    val price: Double,
+    val price: Double = 0.0,
 
     @Column(nullable = false)
-    val quantity: Int
-)
+    val quantity: Int = 0
+) {
+    // Explicit no-argument constructor for Hibernate
+    constructor() : this(0, "", 0.0, 0)
+}
