@@ -15,17 +15,20 @@ class ProductController(private val productService: ProductService) {
     fun getProductById(@PathVariable id: Long): Product? = productService.getProductById(id)
 
     @PostMapping("/")
-    fun addProduct(@RequestBody product: Product): ResponseEntity<Product> {
+    fun addProduct(@RequestBody product: Product): ResponseEntity<Map<String, String>> {
         val savedProduct = productService.addProduct(product)
-        return ResponseEntity.created(URI("/products/${savedProduct.id}")).body(savedProduct)
+        return ResponseEntity.ok(mapOf("message" to "Product added successfully", "id" to savedProduct.id.toString()))
     }
-
+    
     @PutMapping("/{id}")
-    fun updateProductById(@PathVariable id: Long, @RequestBody product: Product): ResponseEntity<Product> {
+    fun updateProductById(@PathVariable id: Long, @RequestBody product: Product): ResponseEntity<Map<String, String>> {
         val updatedProduct = productService.updateProductById(id, product)
-        return ResponseEntity.ok(updatedProduct)
+        return ResponseEntity.ok(mapOf("message" to "Product updated successfully", "id" to id.toString()))
     }
 
     @DeleteMapping("/{id}")
-    fun deleteProductById(@PathVariable id: Long) = productService.deleteProductById(id)
+    fun deleteProductById(@PathVariable id: Long): ResponseEntity<Map<String, String>> {
+        productService.deleteProductById(id)
+        return ResponseEntity.ok(mapOf("message" to "Product deleted successfully", "id" to id.toString()))
+    }
 }
