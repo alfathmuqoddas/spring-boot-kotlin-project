@@ -4,10 +4,11 @@ import com.example.demo.model.Product
 import com.example.demo.service.ProductService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.beans.factory.annotation.Autowired
 
 @RestController
 @RequestMapping("/api/v1/products")
-class ProductController(private val productService: ProductService) {
+class ProductController @Autowired constructor(private val productService: ProductService) {
     @GetMapping("/")
     fun getAllProducts(): List<Product> = productService.getAllProducts()
 
@@ -21,9 +22,13 @@ class ProductController(private val productService: ProductService) {
     }
     
     @PutMapping("/{id}")
-    fun updateProductById(@PathVariable id: Long, @RequestBody product: Product): ResponseEntity<Map<String, String>> {
+    fun updateProductById(@PathVariable("id") id: Long, @RequestBody product: Product): ResponseEntity<Map<String, String>> {
         val updatedProduct = productService.updateProductById(id, product)
-        return ResponseEntity.ok(mapOf("message" to "Product updated successfully", "id" to id.toString()))
+        return if (updatedProduct.isPresent) {
+            ResponseEntity.ok(mapOf("message" to "Product updated successfully", "id" to id.toString()))
+        } else {
+            ResponseEntity.ok(mapOf("message" to "Product not found", "id" to id.toString()))
+        }
     }
 
     @DeleteMapping("/{id}")
