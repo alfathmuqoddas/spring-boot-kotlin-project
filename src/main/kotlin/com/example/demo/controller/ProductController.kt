@@ -5,6 +5,7 @@ import com.example.demo.service.ProductService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -13,7 +14,14 @@ class ProductController @Autowired constructor(private val productService: Produ
     fun getAllProducts(): List<Product> = productService.getAllProducts()
 
     @GetMapping("/{id}")
-    fun getProductById(@PathVariable id: Long): Product? = productService.getProductById(id)
+    fun getProductById(@PathVariable id: Long): ResponseEntity<Any> {
+        val product = productService.getProductById(id)
+        return if (product != null) {
+            ResponseEntity.ok(product)
+        } else {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("message" to "Product not found"))
+        }
+    }
 
     @PostMapping("/")
     fun addProduct(@RequestBody product: Product): ResponseEntity<Map<String, String>> {
