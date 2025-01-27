@@ -11,12 +11,11 @@ import org.springframework.http.HttpStatus
 @RequestMapping("/api/v1/products")
 class ProductController @Autowired constructor(private val productService: ProductService) {
     @GetMapping
-    fun getAllProducts(
+    fun getProducts(
         @RequestParam(value = "sortOrder", required = false) sortOrder: String?,
         @RequestParam(value = "sortBy", required = false) sortBy: String?
     ): List<Product> {
-        val allProducts = productService.getAllProducts()
-        return productService.sortProducts(allProducts, sortBy, sortOrder)
+        return productService.getProducts(sortBy, sortOrder)
     }
 
     @GetMapping("/{id}")
