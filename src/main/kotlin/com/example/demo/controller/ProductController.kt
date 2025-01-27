@@ -5,12 +5,12 @@ import com.example.demo.dto.ProductDTO
 import com.example.demo.service.ProductService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 
 @RestController
 @RequestMapping("/api/v1/products")
-class ProductController @Autowired constructor(private val productService: ProductService) {
+class ProductController (private val productService: ProductService) {
+
     @GetMapping
     fun getProducts(
         @RequestParam(value = "sortOrder", required = false) sortOrder: String?,
