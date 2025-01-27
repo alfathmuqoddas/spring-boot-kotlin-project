@@ -12,6 +12,23 @@ class ProductService @Autowired constructor(private val productRepository: Produ
 
     fun getAllProducts(): List<Product> = productRepository.findAll()
 
+    fun sortProducts(products: List<Product>, sortBy: String?, sortOrder: String?): List<Product> {
+        val actualSortBy = sortBy?.lowercase() ?: "name"
+        val actualSortOrder = sortOrder?.lowercase() ?: "asc"
+
+        val comparator: Comparator<Product> = when (actualSortBy) {
+            "price" -> Comparator.comparing { it.price }
+            "name" -> Comparator.comparing { it.name }
+            else -> throw IllegalArgumentException("Invalid sortBy parameter")
+        }
+
+        return if (actualSortOrder == "desc") {
+            products.sortedWith(comparator.reversed())
+        } else {
+            products.sortedWith(comparator)
+        }
+    }
+
     fun getProductById(id: Long): Product? = productRepository.findById(id).orElse(null)
 
     fun deleteProductById(id: Long) = productRepository.deleteById(id)

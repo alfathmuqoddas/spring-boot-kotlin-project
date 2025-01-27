@@ -10,8 +10,14 @@ import org.springframework.http.HttpStatus
 @RestController
 @RequestMapping("/api/v1/products")
 class ProductController @Autowired constructor(private val productService: ProductService) {
-    @GetMapping("/")
-    fun getAllProducts(): List<Product> = productService.getAllProducts()
+    @GetMapping
+    fun getAllProducts(
+        @RequestParam(value = "sortOrder", required = false) sortOrder: String?,
+        @RequestParam(value = "sortBy", required = false) sortBy: String?
+    ): List<Product> {
+        val allProducts = productService.getAllProducts()
+        return productService.sortProducts(allProducts, sortBy, sortOrder)
+    }
 
     @GetMapping("/{id}")
     fun getProductById(@PathVariable id: Long): ResponseEntity<Any> {
@@ -23,7 +29,7 @@ class ProductController @Autowired constructor(private val productService: Produ
         }
     }
 
-    @PostMapping("/")
+    @PostMapping
     fun addProduct(@RequestBody product: Product): ResponseEntity<Map<String, String>> {
         val savedProduct = productService.addProduct(product)
         return ResponseEntity.ok(mapOf("message" to "Product added successfully", "id" to savedProduct.id.toString()))
