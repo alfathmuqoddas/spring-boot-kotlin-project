@@ -1,6 +1,7 @@
 package com.example.demo.controller
 
 import com.example.demo.model.Product
+import com.example.demo.dto.ProductDTO
 import com.example.demo.service.ProductService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -33,6 +34,12 @@ class ProductController @Autowired constructor(private val productService: Produ
         val savedProduct = productService.addProduct(product)
         return ResponseEntity.ok(mapOf("message" to "Product added successfully", "id" to savedProduct.id.toString()))
     }
+
+    @PostMapping("/bulk-create")
+    fun bulkAddProducts(@RequestBody products: List<ProductDTO>): ResponseEntity<Map<String, String>> {
+        val savedProducts = productService.bulkAddProducts(products)
+        return ResponseEntity.ok(mapOf("message" to "Products added successfully", "count" to savedProducts.size.toString()))
+    }   
     
     @PutMapping("/{id}")
     fun updateProductById(@PathVariable("id") id: Long, @RequestBody product: Product): ResponseEntity<Map<String, String>> {
