@@ -16,10 +16,11 @@ class ProductService (
     fun addProduct(product: Product): Product = productRepository.save(product)
 
     fun bulkAddProducts(products: List<ProductDTO>): List<Product> {
+        val categoryIds = products.map {it.category.id}.toSet()
+        val categories = categoryRepository.findAllById(categoryIds).associateBy {it.id}
+        
         val productEntities = products.map { 
-            val category = categoryRepository.findById(it.category.id).orElseThrow {
-                IllegalArgumentException("Category with id ${it.category.id} not found")
-            }
+            val category = categories[it.category.id] ?: throw IllegalArgumentException("Category with id ${it.category.id} not found")
             Product(name = it.name, price = it.price, quantity = it.quantity, category = category) 
         }
         return productRepository.saveAll(productEntities)
