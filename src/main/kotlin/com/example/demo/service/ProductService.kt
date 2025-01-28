@@ -3,16 +3,25 @@ package com.example.demo.service
 import com.example.demo.dto.ProductDTO
 import com.example.demo.model.Product
 import com.example.demo.repository.ProductRepository
+import com.example.demo.repository.CategoryRepository
 import org.springframework.stereotype.Service
 import java.util.Optional
 
 @Service
-class ProductService (private val productRepository: ProductRepository) {
+class ProductService (
+    private val productRepository: ProductRepository,
+    private val categoryRepository: CategoryRepository
+) {
     
     fun addProduct(product: Product): Product = productRepository.save(product)
 
     fun bulkAddProducts(products: List<ProductDTO>): List<Product> {
-        val productEntities = products.map { Product(name = it.name, price = it.price, quantity = it.quantity) }
+        val productEntities = products.map { 
+            val category = categoryRepository.findById(it.category.id).orElseThrow {
+                IllegalArgumentException("Category with id ${it.category.id} not found")
+            }
+            Product(name = it.name, price = it.price, quantity = it.quantity, category = category) 
+        }
         return productRepository.saveAll(productEntities)
     }
 
