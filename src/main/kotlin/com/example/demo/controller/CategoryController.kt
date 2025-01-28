@@ -44,6 +44,28 @@ class CategoryController (private val categoryService: CategoryService) {
         }
     }
 
+    // @GetMapping("/with-products")
+    // fun getCategoriesWithProducts(): ResponseEntity<ApiResponse> {
+    //     return try {
+    //         val categories = categoryService.getCategoriesWithProducts()
+    //         ResponseEntity.ok(
+    //             ApiResponse(
+    //                 success = true,
+    //                 message = "Categories retrieved successfully",
+    //                 data = mapOf("categories" to categories)
+    //             )
+    //         )
+    //     } catch (ex: Exception) {
+    //         ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+    //             ApiResponse(
+    //                 success = false,
+    //                 message = "Failed to retrieve categories due to an unknown error",
+    //                 error = ex.message
+    //             )
+    //         )
+    //     }
+    // }
+
     @GetMapping("/{id}")
     fun getCategoryById(@PathVariable id: Long): ResponseEntity<ApiResponse> {
         return try {
