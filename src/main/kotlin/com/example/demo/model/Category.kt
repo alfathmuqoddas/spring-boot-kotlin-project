@@ -13,12 +13,4 @@ data class Category(
     @Column(nullable = false)
     @field:NotBlank(message = "Category name cannot be blank")
     val name: String = "",
-
-    @OneToMany(mappedBy = "category", cascade = [CascadeType.ALL])
-    @JsonIgnoreProperties("category")
-    val products: MutableList<Product> = ArrayList() // Use ArrayList for Hibernate compatibility
 )
-// {
-//     // Explicit no-argument constructor for Hibernate
-//     constructor() : this(0, "", ArrayList())
-// }
