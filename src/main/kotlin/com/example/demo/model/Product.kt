@@ -1,6 +1,7 @@
 package com.example.demo.model
 
 import jakarta.persistence.*
+import com.example.demo.model.Category
 
 @Entity
 data class Product(
@@ -15,7 +16,12 @@ data class Product(
     val price: Double = 0.0,
 
     @Column(nullable = false)
-    val quantity: Int = 0
+    val quantity: Int = 0,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnoreProperties("products")
+    val category: Category = Category()
 ) {
     // Explicit no-argument constructor for Hibernate
     constructor() : this(0, "", 0.0, 0)

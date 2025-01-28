@@ -4,6 +4,7 @@ import com.example.demo.model.Product
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ProductRepository : JpaRepository<Product, Long> {
+    @EntityGraph(attributePaths = ["category"])
     fun findByOrderByNameAsc(): List<Product>
     fun findByOrderByNameDesc(): List<Product>
     fun findByOrderByPriceAsc(): List<Product>
