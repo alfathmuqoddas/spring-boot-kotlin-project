@@ -36,15 +36,16 @@ class ProductService (private val productRepository: ProductRepository) {
 
     fun deleteProductById(id: Long) = productRepository.deleteById(id)
 
-    fun updateProductById(id: Long, product: Product): Optional<Product> {
-        val existingProduct = productRepository.findById(id).orElse(null)
-
-        return if (existingProduct == null) {
-            Optional.empty()
-        } else {
-            val updatedProduct = product.copy(id = existingProduct.id)
-            productRepository.save(updatedProduct)
-            Optional.of(updatedProduct)
-        }
+    fun updateProductById(id: Long, product: Product): Product? {
+        return productRepository.findById(id)
+            .map { existingProduct ->
+                val updatedProduct = existingProduct.copy(
+                    name = product.name, // Update other fields as needed
+                    price = product.price,
+                    quantity = product.quantity
+                )
+                productRepository.save(updatedProduct)
+            }
+            .orElse(null)
     }
 }

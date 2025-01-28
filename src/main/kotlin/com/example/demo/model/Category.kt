@@ -1,7 +1,8 @@
-pacakge com.example.demo.model
+package com.example.demo.model
 
 import jakarta.persistence.*
-import com.example.demo.model.Product
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import jakarta.validation.constraints.NotBlank
 
 @Entity
 data class Category(
@@ -10,12 +11,14 @@ data class Category(
     val id: Long = 0,
 
     @Column(nullable = false)
-    val name: String = ""
+    @field:NotBlank(message = "Category name cannot be blank")
+    val name: String = "",
 
-    @OnetoMany(mappedBy = "category", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "category", cascade = [CascadeType.ALL])
     @JsonIgnoreProperties("category")
-    val products: MutableList<Product> = mutableListOf()
-) {
-    // Explicit no-argument constructor for Hibernate
-    constructor() : this(0, "")
-}
+    val products: MutableList<Product> = ArrayList() // Use ArrayList for Hibernate compatibility
+)
+// {
+//     // Explicit no-argument constructor for Hibernate
+//     constructor() : this(0, "", ArrayList())
+// }

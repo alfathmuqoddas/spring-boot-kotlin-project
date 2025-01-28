@@ -4,6 +4,7 @@ import com.example.demo.model.Category
 import com.example.demo.repository.CategoryRepository
 import org.springframework.stereotype.Service
 
+
 @Service
 class CategoryService (private val categoryRepository: CategoryRepository) {
 
@@ -14,14 +15,14 @@ class CategoryService (private val categoryRepository: CategoryRepository) {
     fun addCategory(category: Category): Category = categoryRepository.save(category)
 
     fun updateCategoryById(id: Long, category: Category): Category? {
-        val existingCategory = categoryRepository.findById(id).orElse(null)
-        return if (existingCategory == null) {
-            Optional.empty()
-        } else {
-            val updatedCategory = category.copy(id = existingCategory.id)
-            categoryRepository.save(updatedCategory)
-            Optional.of(updatedCategory)
-        }
+        return categoryRepository.findById(id)
+            .map { existingCategory ->
+                val updatedCategory = existingCategory.copy(
+                    name = category.name // Update other fields as needed
+                )
+                categoryRepository.save(updatedCategory)
+            }
+            .orElse(null)
     }
 
     fun deleteCategoryById(id: Long) = categoryRepository.deleteById(id)
