@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import jakarta.validation.Valid
 import org.springframework.dao.DataAccessException
-// import com.example.demo.dto.CategoryDTO
+import com.example.demo.dto.CategoryDTO
 import com.example.demo.dto.BulkSubCategoryDTO
 // import com.example.demo.repository.CategoryRepository
 
@@ -43,30 +43,27 @@ class SubCategoryController (
         return ResponseEntity.ok(mapOf("message" to "SubCategories added successfully", "count" to savedSubCategories.size.toString()))
     }
 
-    // //seed the data
-    // @PostMapping("/seed")
-    // fun seedSubCategories(): ResponseEntity<Map<String, String>> {
-
-    //     val categories = categoryRepository.findAllById(listOf(1L, 2L, 3L, 4L)).associateBy { it.id }
-
-    //     val subCategories = listOf(
-    //         BulkSubCategoryDTO(name = "Fruits", category = categories[1]),
-    //         BulkSubCategoryDTO(name = "Vegetables", category = categories[1]),
-    //         BulkSubCategoryDTO(name = "Herb & Spices", category = categories[1]),
-    //         BulkSubCategoryDTO(name = "Milk & Milk Alternatives", category = categories[2]),
-    //         BulkSubCategoryDTO(name = "Cheese & Butter", category = categories[2]),
-    //         BulkSubCategoryDTO(name = "Yogurt & Cream", category = categories[2]),
-    //         BulkSubCategoryDTO(name = "Poultry", category = categories[3]),
-    //         BulkSubCategoryDTO(name = "Red Meat", category = categories[3]),
-    //         BulkSubCategoryDTO(name = "Seafood", category = categories[3]),
-    //         BulkSubCategoryDTO(name = "Processed Meats", category = categories[3]),
-    //         BulkSubCategoryDTO(name = "Bread", category = categories[4]),
-    //         BulkSubCategoryDTO(name = "Pastries & Desserts", category = categories[4]),
-    //         BulkSubCategoryDTO(name = "Tortillas & Wraps", category = categories[4])
-    //     )
-    //     subCategoryService.bulkAddSubCategories(subCategories)
-    //     return ResponseEntity.ok(mapOf("message" to "SubCategories seeded successfully"))
-    // }
+    //seed the data
+    @PostMapping("/seed")
+    fun seedSubCategories(): ResponseEntity<Map<String, String>> {
+        val subCategories = listOf(
+            BulkSubCategoryDTO(name = "Fruits", category = CategoryDTO(id = 1)),
+            BulkSubCategoryDTO(name = "Vegetables", category = CategoryDTO(id = 1)),
+            BulkSubCategoryDTO(name = "Herb & Spices", category = CategoryDTO(id = 1)),
+            BulkSubCategoryDTO(name = "Milk & Milk Alternatives", category = CategoryDTO(id = 2)),
+            BulkSubCategoryDTO(name = "Cheese & Butter", category = CategoryDTO(id = 2)),
+            BulkSubCategoryDTO(name = "Yogurt & Cream", category = CategoryDTO(id = 2)),
+            BulkSubCategoryDTO(name = "Poultry", category = CategoryDTO(id = 3)),
+            BulkSubCategoryDTO(name = "Red Meat", category = CategoryDTO(id = 3)),
+            BulkSubCategoryDTO(name = "Seafood", category = CategoryDTO(id = 3)),
+            BulkSubCategoryDTO(name = "Processed Meats", category = CategoryDTO(id = 3)),
+            BulkSubCategoryDTO(name = "Bread", category = CategoryDTO(id = 4)),
+            BulkSubCategoryDTO(name = "Pastries & Desserts", category = CategoryDTO(id = 4)),
+            BulkSubCategoryDTO(name = "Tortillas & Wraps", category = CategoryDTO(id = 4)),
+        )
+        subCategoryService.bulkAddSubCategories(subCategories)
+        return ResponseEntity.ok(mapOf("message" to "SubCategories seeded successfully"))
+    }
 
     @PutMapping("/{id}")
     fun updateSubCategoryById(@PathVariable("id") @Valid id: Long, @RequestBody subCategory: SubCategory): ResponseEntity<Map<String, String>> {
