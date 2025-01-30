@@ -4,6 +4,7 @@ import com.example.demo.dto.ProductDTO
 import com.example.demo.model.Product
 import com.example.demo.repository.ProductRepository
 import com.example.demo.repository.CategoryRepository
+import com.example.demo.repository.SubCategoryRepository
 import org.springframework.stereotype.Service
 import java.util.Optional
 
@@ -18,10 +19,14 @@ class ProductService (
     fun bulkAddProducts(products: List<ProductDTO>): List<Product> {
         val categoryIds = products.map {it.category.id}.toSet()
         val categories = categoryRepository.findAllById(categoryIds).associateBy {it.id}
+
+        val subCategoryIds = products.map {it.subcategory.id}.toSet()
+        val subCategories = subCategoryRepository.findAllById(subCategoryIds).associateBy {it.id}
         
         val productEntities = products.map { 
             val category = categories[it.category.id] ?: throw IllegalArgumentException("Category with id ${it.category.id} not found")
-            Product(name = it.name, price = it.price, quantity = it.quantity, category = category) 
+            val subCategory = subCategories[it.subcategory.id] ?: throw IllegalArgumentException("SubCategory with id ${it.subcategory.id} not found")
+            Product(name = it.name, price = it.price, quantity = it.quantity, category = category, subCategory = subCategory) 
         }
         return productRepository.saveAll(productEntities)
     }

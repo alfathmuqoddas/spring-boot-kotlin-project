@@ -2,7 +2,7 @@ package com.example.demo.model
 
 import jakarta.persistence.*
 import com.example.demo.model.Category
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.example.demo.model.SubCategory
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 
@@ -26,6 +26,9 @@ data class Product(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonIgnoreProperties("products")
     val category: Category? = null
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subcategory_id", nullable = true)
+    val subcategory: SubCategory? = null
 )
