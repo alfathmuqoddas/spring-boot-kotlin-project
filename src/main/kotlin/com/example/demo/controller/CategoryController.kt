@@ -121,6 +121,49 @@ class CategoryController (private val categoryService: CategoryService) {
         }
     }
 
+    //seed the data
+    @PostMapping("/seed")
+    fun seedCategories(): ResponseEntity<ApiResponse> {
+        val categories = listOf(
+            Category(name = "Fresh Produce"),
+            Category(name = "Dairy & Eggs"),
+            Category(name = "Meat & Seafood"),
+            Category(name = "Bakery & Bread"),
+            Category(name = "Frozen Foods"),
+            Category(name = "Pantry Staples"),
+            Category(name = "Snacks & Beverages"),
+            Category(name = "Health & Organic Products"),
+            Category(name = "Household Essentials"),
+            Category(name = "Baby & Personal Care"),
+        )
+        categoryService.bulkAddCategories(categories)
+        return try {
+            ResponseEntity.ok(
+                ApiResponse(
+                    success = true,
+                    message = "Categories seeded successfully",
+                    data = null
+                )
+            )
+        } catch (ex: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                ApiResponse(
+                    success = false,
+                    message = "Failed to seed categories due to an unknown error",
+                    error = ex.message
+                )
+            )
+        } catch (ex: DataAccessException) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                ApiResponse(
+                    success = false,
+                    message = "Failed to seed categories due to a database error",
+                    error = ex.message
+                )
+            )
+        }
+    }
+
     @PutMapping("/{id}")
     fun updateCategoryById(
         @PathVariable("id") id: Long, 
