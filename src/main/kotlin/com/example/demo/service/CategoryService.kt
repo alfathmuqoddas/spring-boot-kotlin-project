@@ -3,6 +3,7 @@ package com.example.demo.service
 import com.example.demo.model.Category
 import com.example.demo.repository.CategoryRepository
 import org.springframework.stereotype.Service
+import com.example.demo.dto.BulkCategoryDTO
 
 
 @Service
@@ -14,8 +15,10 @@ class CategoryService (private val categoryRepository: CategoryRepository) {
 
     fun addCategory(category: Category): Category = categoryRepository.save(category)
 
-    fun bulkAddCategories(categories: List<CategoryDTO>): List<Category> {
-        val categoryEntities = categories.map { Category(name = it.name) }
+    fun bulkAddCategories(categories: List<BulkCategoryDTO>): List<Category> {
+        val categoryEntities = categories.map { 
+            Category(name = it.name) 
+        }
         return categoryRepository.saveAll(categoryEntities)
     }
 

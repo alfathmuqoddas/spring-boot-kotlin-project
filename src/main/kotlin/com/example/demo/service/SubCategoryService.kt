@@ -1,12 +1,17 @@
-com package com.example.demo.service
+package com.example.demo.service
 
 import com.example.demo.model.SubCategory
 import com.example.demo.dto.BulkSubCategoryDTO
 import com.example.demo.repository.SubCategoryRepository
+import com.example.demo.repository.CategoryRepository
 import org.springframework.stereotype.Service
 
 @Service
-class SubCategoryService (private val subCategoryRepository: SubCategoryRepository) {
+class SubCategoryService (
+    private val subCategoryRepository: SubCategoryRepository, 
+    private val categoryRepository: CategoryRepository
+    
+) {
 
     fun getSubCategories(): List<SubCategory> = subCategoryRepository.findAll()
 
@@ -16,7 +21,7 @@ class SubCategoryService (private val subCategoryRepository: SubCategoryReposito
 
     fun bulkAddSubCategories(subCategories: List<BulkSubCategoryDTO>): List<SubCategory> {
         val categoryIds = subCategories.map {it.category.id}.toSet()
-        val categories = subCategoryRepository.findAllById(categoryIds).associateBy {it.id}
+        val categories = categoryRepository.findAllById(categoryIds).associateBy {it.id}
 
         val subCategoryEntities = subCategories.map { 
             val category = categories[it.category.id] ?: throw IllegalArgumentException("Category with id ${it.category.id} not found")

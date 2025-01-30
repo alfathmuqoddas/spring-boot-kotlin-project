@@ -11,7 +11,8 @@ import java.util.Optional
 @Service
 class ProductService (
     private val productRepository: ProductRepository,
-    private val categoryRepository: CategoryRepository
+    private val categoryRepository: CategoryRepository,
+    private val subCategoryRepository: SubCategoryRepository
 ) {
     
     fun addProduct(product: Product): Product = productRepository.save(product)
@@ -25,8 +26,8 @@ class ProductService (
         
         val productEntities = products.map { 
             val category = categories[it.category.id] ?: throw IllegalArgumentException("Category with id ${it.category.id} not found")
-            val subCategory = subCategories[it.subcategory.id] ?: throw IllegalArgumentException("SubCategory with id ${it.subcategory.id} not found")
-            Product(name = it.name, price = it.price, quantity = it.quantity, category = category, subCategory = subCategory) 
+            val subcategory = subCategories[it.subcategory.id] ?: throw IllegalArgumentException("SubCategory with id ${it.subcategory.id} not found")
+            Product(name = it.name, price = it.price, quantity = it.quantity, category = category, subcategory = subcategory) 
         }
         return productRepository.saveAll(productEntities)
     }

@@ -26,9 +26,9 @@ data class Product(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    val category: Category? = null
+    val category: Category? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subcategory_id", nullable = true)
-    val subcategory: SubCategory? = null
+    val subcategory: SubCategory? = null,
 )
