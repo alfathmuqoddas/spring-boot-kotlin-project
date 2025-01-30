@@ -1,9 +1,7 @@
 package com.example.demo.model
 
 import jakarta.persistence.*
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import jakarta.validation.constraints.NotBlank
-import com.example.demo.model.Product
 
 @Entity
 data class Category(
@@ -15,7 +13,4 @@ data class Category(
     @field:NotBlank(message = "Category name cannot be blank")
     val name: String = "",
 
-    // @OneToMany(mappedBy = "category", cascade = [CascadeType.ALL])
-    // @JsonIgnoreProperties("category")
-    // val products: List<Product> = mutableListOf()
 )

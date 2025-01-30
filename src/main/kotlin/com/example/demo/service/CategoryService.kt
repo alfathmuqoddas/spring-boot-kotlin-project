@@ -10,11 +10,14 @@ class CategoryService (private val categoryRepository: CategoryRepository) {
 
     fun getCategories(): List<Category> = categoryRepository.findAll()
 
-    // fun getCategoriesWithProducts(): List<Category> = categoryRepository.findAllWithProducts()
-
     fun getCategoryById(id: Long): Category? = categoryRepository.findById(id).orElse(null)
 
     fun addCategory(category: Category): Category = categoryRepository.save(category)
+
+    fun bulkAddCategories(categories: List<CategoryDTO>): List<Category> {
+        val categoryEntities = categories.map { Category(name = it.name) }
+        return categoryRepository.saveAll(categoryEntities)
+    }
 
     fun updateCategoryById(id: Long, category: Category): Category? {
         return categoryRepository.findById(id)
