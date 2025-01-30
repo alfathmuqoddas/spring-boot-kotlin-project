@@ -9,8 +9,8 @@ data class ProductDTO(
     val name: String,
     val price: Double,
     val quantity: Int,
-    val category_id: Long,
-    val subcategory_id: Long
+    val categoryId: Long,
+    val subcategoryId: Long
 )
 
 data class SubCategoryDTO(
@@ -23,5 +23,5 @@ data class BulkCategoryDTO(
 
 data class BulkSubCategoryDTO(
     val name: String,
-    val category_id: Long
+    val categoryId: Long
 )

@@ -24,9 +24,9 @@ data class Product(
     @field:Positive(message = "Product quantity cannot be negative")
     val quantity: Int = 0,
 
-    @Column(nullable = false)
-    val category_id: Long = 0,
+    @Column(name="category_id", nullable = false)
+    val categoryId: Long = 0,
 
-    @Column(nullable = false)
-    val subcategory_id: Long = 0,
+    @Column(name="subcategory_id", nullable = false)
+    val subcategoryId: Long = 0,
 )

@@ -47,19 +47,19 @@ class SubCategoryController (
     @PostMapping("/seed")
     fun seedSubCategories(): ResponseEntity<Map<String, String>> {
         val subCategories = listOf(
-            BulkSubCategoryDTO(name = "Fruits", category_id = 1),
-            BulkSubCategoryDTO(name = "Vegetables", category_id = 1),
-            BulkSubCategoryDTO(name = "Herb & Spices", category_id = 1),
-            BulkSubCategoryDTO(name = "Milk & Milk Alternatives", category_id = 2),
-            BulkSubCategoryDTO(name = "Cheese & Butter", category_id = 2),
-            BulkSubCategoryDTO(name = "Yogurt & Cream", category_id = 2),
-            BulkSubCategoryDTO(name = "Poultry", category_id = 3),
-            BulkSubCategoryDTO(name = "Red Meat", category_id = 3),
-            BulkSubCategoryDTO(name = "Seafood", category_id = 3),
-            BulkSubCategoryDTO(name = "Processed Meats", category_id = 3),
-            BulkSubCategoryDTO(name = "Bread", category_id = 4),
-            BulkSubCategoryDTO(name = "Pastries & Desserts", category_id = 4),
-            BulkSubCategoryDTO(name = "Tortillas & Wraps", category_id = 4),
+            BulkSubCategoryDTO(name = "Fruits", categoryId = 1),
+            BulkSubCategoryDTO(name = "Vegetables", categoryId = 1),
+            BulkSubCategoryDTO(name = "Herb & Spices", categoryId = 1),
+            BulkSubCategoryDTO(name = "Milk & Milk Alternatives", categoryId = 2),
+            BulkSubCategoryDTO(name = "Cheese & Butter", categoryId = 2),
+            BulkSubCategoryDTO(name = "Yogurt & Cream", categoryId = 2),
+            BulkSubCategoryDTO(name = "Poultry", categoryId = 3),
+            BulkSubCategoryDTO(name = "Red Meat", categoryId = 3),
+            BulkSubCategoryDTO(name = "Seafood", categoryId = 3),
+            BulkSubCategoryDTO(name = "Processed Meats", categoryId = 3),
+            BulkSubCategoryDTO(name = "Bread", categoryId = 4),
+            BulkSubCategoryDTO(name = "Pastries & Desserts", categoryId = 4),
+            BulkSubCategoryDTO(name = "Tortillas & Wraps", categoryId = 4),
         )
         subCategoryService.bulkAddSubCategories(subCategories)
         return ResponseEntity.ok(mapOf("message" to "SubCategories seeded successfully"))

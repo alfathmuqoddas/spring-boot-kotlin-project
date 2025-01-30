@@ -20,12 +20,12 @@ class SubCategoryService (
     fun addSubCategory(subCategory: SubCategory): SubCategory = subCategoryRepository.save(subCategory)
 
     fun bulkAddSubCategories(subCategories: List<BulkSubCategoryDTO>): List<SubCategory> {
-        val categoryIds = subCategories.map {it.category_id}.toSet()
+        val categoryIds = subCategories.map {it.categoryId}.toSet()
         val categories = categoryRepository.findAllById(categoryIds).associateBy {it.id}
 
         val subCategoryEntities = subCategories.map { 
-            val category = categories[it.category_id] ?: throw IllegalArgumentException("Category with id ${it.category_id} not found")
-            SubCategory(name = it.name, category_id = it.category_id) 
+            val category = categories[it.categoryId] ?: throw IllegalArgumentException("Category with id ${it.categoryId} not found")
+            SubCategory(name = it.name, categoryId = it.categoryId) 
         }
         return subCategoryRepository.saveAll(subCategoryEntities)
     }

@@ -19,7 +19,7 @@ class ProductService (
         
         val productEntities = products.map { 
 
-            Product(name = it.name, price = it.price, quantity = it.quantity, category_id = it.category_id, subcategory_id = it.subcategory_id) 
+            Product(name = it.name, price = it.price, quantity = it.quantity, categoryId = it.categoryId, subcategoryId = it.subcategoryId) 
         }
         return productRepository.saveAll(productEntities)
     }
@@ -58,10 +58,10 @@ class ProductService (
     }
 
     fun getProductsByCategoryId(categoryId: Long): List<Product> {
-        return productRepository.findProductsByCategoryId(categoryId)
+        return productRepository.findByCategoryId(categoryId)
     }
 
     fun getProductsBySubcategoryId(subcategoryId: Long): List<Product> {
-        return productRepository.findProductsBySubcategoryId(subcategoryId)
+        return productRepository.findBySubcategoryId(subcategoryId)
     }
 }

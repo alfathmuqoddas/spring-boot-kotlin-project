@@ -14,9 +14,12 @@ interface ProductRepository : JpaRepository<Product, Long> {
     fun findByOrderByPriceAsc(): List<Product>
     fun findByOrderByPriceDesc(): List<Product>
 
-    @Query("SELECT p FROM Product p WHERE p.category_id = :categoryId")
-    fun findProductsByCategoryId(@Param("categoryId") categoryId: Long): List<Product>
+    fun findByCategoryId(categoryId: Long): List<Product>
+    fun findBySubcategoryId(subcategoryId: Long): List<Product>
 
-    @Query("SELECT p FROM Product p WHERE p.subcategory_id = :subcategoryId")
-    fun findProductsBySubcategoryId(@Param("subcategoryId") subcategoryId: Long): List<Product>
+    // @Query("SELECT p FROM Product p WHERE p.category_id = :categoryId")
+    // fun findProductsByCategoryId(@Param("categoryId") categoryId: Long): List<Product>
+
+    // @Query("SELECT p FROM Product p WHERE p.subcategory_id = :subcategoryId")
+    // fun findProductsBySubcategoryId(@Param("subcategoryId") subcategoryId: Long): List<Product>
 }

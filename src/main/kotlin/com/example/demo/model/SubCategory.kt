@@ -15,5 +15,5 @@ data class SubCategory(
     val name: String = "",
 
     @Column(nullable = false)
-    val category_id: Long = 0,
+    val categoryId: Long = 0,
 )
