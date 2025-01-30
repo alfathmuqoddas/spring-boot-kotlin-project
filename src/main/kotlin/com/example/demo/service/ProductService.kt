@@ -58,4 +58,8 @@ class ProductService (
             }
             .orElse(null)
     }
+
+    fun getProductsByCategoryName(categoryName: String): List<Product> {
+        return productRepository.findProductsByCategoryName(categoryName)
+    }
 }

@@ -30,6 +30,16 @@ class ProductController (private val productService: ProductService) {
         }
     }
 
+    @GetMapping("/category/{categoryName}")
+    fun getProductsByCategoryName(@PathVariable categoryName: String): ResponseEntity<Any> {
+        val products = productService.getProductsByCategoryName(categoryName)
+        return if (products.isNotEmpty()) {
+            ResponseEntity.ok(products)
+        } else {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("message" to "No products found"))
+        }
+    }
+
     @PostMapping
     fun addProduct(@RequestBody @Valid product: Product): ResponseEntity<Map<String, String>> {
         val savedProduct = productService.addProduct(product)
