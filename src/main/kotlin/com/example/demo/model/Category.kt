@@ -11,6 +11,5 @@ data class Category(
 
     @Column(nullable = false)
     @field:NotBlank(message = "Category name cannot be blank")
-    val name: String = "",
-
+    val name: String = ""
 )

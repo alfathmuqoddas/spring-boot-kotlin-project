@@ -3,31 +3,23 @@ package com.example.demo.service
 import com.example.demo.dto.ProductDTO
 import com.example.demo.model.Product
 import com.example.demo.repository.ProductRepository
-import com.example.demo.repository.CategoryRepository
-import com.example.demo.repository.SubCategoryRepository
+// import com.example.demo.repository.CategoryRepository
+// import com.example.demo.repository.SubCategoryRepository
 import org.springframework.stereotype.Service
 import java.util.Optional
 
 @Service
 class ProductService (
     private val productRepository: ProductRepository,
-    private val categoryRepository: CategoryRepository,
-    private val subCategoryRepository: SubCategoryRepository
 ) {
     
     fun addProduct(product: Product): Product = productRepository.save(product)
 
     fun bulkAddProducts(products: List<ProductDTO>): List<Product> {
-        val categoryIds = products.map {it.category.id}.toSet()
-        val categories = categoryRepository.findAllById(categoryIds).associateBy {it.id}
-
-        val subCategoryIds = products.map {it.subcategory.id}.toSet()
-        val subCategories = subCategoryRepository.findAllById(subCategoryIds).associateBy {it.id}
         
         val productEntities = products.map { 
-            val category = categories[it.category.id] ?: throw IllegalArgumentException("Category with id ${it.category.id} not found")
-            val subcategory = subCategories[it.subcategory.id] ?: throw IllegalArgumentException("SubCategory with id ${it.subcategory.id} not found")
-            Product(name = it.name, price = it.price, quantity = it.quantity, category = category, subcategory = subcategory) 
+
+            Product(name = it.name, price = it.price, quantity = it.quantity, category_id = it.category_id, subcategory_id = it.subcategory_id) 
         }
         return productRepository.saveAll(productEntities)
     }
@@ -65,7 +57,11 @@ class ProductService (
             .orElse(null)
     }
 
-    fun getProductsByCategoryName(categoryName: String): List<Product> {
-        return productRepository.findProductsByCategoryName(categoryName)
+    fun getProductsByCategoryId(categoryId: Long): List<Product> {
+        return productRepository.findProductsByCategoryId(categoryId)
+    }
+
+    fun getProductsBySubcategoryId(subcategoryId: Long): List<Product> {
+        return productRepository.findProductsBySubcategoryId(subcategoryId)
     }
 }

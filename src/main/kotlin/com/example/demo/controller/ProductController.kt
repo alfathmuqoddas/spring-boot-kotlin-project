@@ -30,9 +30,19 @@ class ProductController (private val productService: ProductService) {
         }
     }
 
-    @GetMapping("/category/{categoryName}")
-    fun getProductsByCategoryName(@PathVariable categoryName: String): ResponseEntity<Any> {
-        val products = productService.getProductsByCategoryName(categoryName)
+    @GetMapping("/category/{categoryId}")
+    fun getProductsByCategoryName(@PathVariable categoryId: Long): ResponseEntity<Any> {
+        val products = productService.getProductsByCategoryId(categoryId)
+        return if (products.isNotEmpty()) {
+            ResponseEntity.ok(products)
+        } else {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("message" to "No products found"))
+        }
+    }
+
+    @GetMapping("/subcategory/{subcategoryId}")
+    fun getProductsBySubcategoryId(@PathVariable subcategoryId: Long): ResponseEntity<Any> {
+        val products = productService.getProductsBySubcategoryId(subcategoryId)
         return if (products.isNotEmpty()) {
             ResponseEntity.ok(products)
         } else {

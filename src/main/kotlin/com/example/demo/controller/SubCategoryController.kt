@@ -33,8 +33,8 @@ class SubCategoryController (
 
     @PostMapping
     fun addSubCategory(@RequestBody @Valid subCategory: SubCategory): ResponseEntity<Map<String, String>> {
-        val savedSubCategory = subCategoryService.addSubCategory(subCategory)
-        return ResponseEntity.ok(mapOf("message" to "SubCategory added successfully", "id" to savedSubCategory.id.toString()))
+        val subCategoryEntity = subCategoryService.addSubCategory(subCategory)
+        return ResponseEntity.ok(mapOf("message" to "SubCategory added successfully", "id" to subCategoryEntity.id.toString()))
     }
 
     @PostMapping("/bulk-create")
@@ -47,19 +47,19 @@ class SubCategoryController (
     @PostMapping("/seed")
     fun seedSubCategories(): ResponseEntity<Map<String, String>> {
         val subCategories = listOf(
-            BulkSubCategoryDTO(name = "Fruits", category = CategoryDTO(id = 1)),
-            BulkSubCategoryDTO(name = "Vegetables", category = CategoryDTO(id = 1)),
-            BulkSubCategoryDTO(name = "Herb & Spices", category = CategoryDTO(id = 1)),
-            BulkSubCategoryDTO(name = "Milk & Milk Alternatives", category = CategoryDTO(id = 2)),
-            BulkSubCategoryDTO(name = "Cheese & Butter", category = CategoryDTO(id = 2)),
-            BulkSubCategoryDTO(name = "Yogurt & Cream", category = CategoryDTO(id = 2)),
-            BulkSubCategoryDTO(name = "Poultry", category = CategoryDTO(id = 3)),
-            BulkSubCategoryDTO(name = "Red Meat", category = CategoryDTO(id = 3)),
-            BulkSubCategoryDTO(name = "Seafood", category = CategoryDTO(id = 3)),
-            BulkSubCategoryDTO(name = "Processed Meats", category = CategoryDTO(id = 3)),
-            BulkSubCategoryDTO(name = "Bread", category = CategoryDTO(id = 4)),
-            BulkSubCategoryDTO(name = "Pastries & Desserts", category = CategoryDTO(id = 4)),
-            BulkSubCategoryDTO(name = "Tortillas & Wraps", category = CategoryDTO(id = 4)),
+            BulkSubCategoryDTO(name = "Fruits", category_id = 1),
+            BulkSubCategoryDTO(name = "Vegetables", category_id = 1),
+            BulkSubCategoryDTO(name = "Herb & Spices", category_id = 1),
+            BulkSubCategoryDTO(name = "Milk & Milk Alternatives", category_id = 2),
+            BulkSubCategoryDTO(name = "Cheese & Butter", category_id = 2),
+            BulkSubCategoryDTO(name = "Yogurt & Cream", category_id = 2),
+            BulkSubCategoryDTO(name = "Poultry", category_id = 3),
+            BulkSubCategoryDTO(name = "Red Meat", category_id = 3),
+            BulkSubCategoryDTO(name = "Seafood", category_id = 3),
+            BulkSubCategoryDTO(name = "Processed Meats", category_id = 3),
+            BulkSubCategoryDTO(name = "Bread", category_id = 4),
+            BulkSubCategoryDTO(name = "Pastries & Desserts", category_id = 4),
+            BulkSubCategoryDTO(name = "Tortillas & Wraps", category_id = 4),
         )
         subCategoryService.bulkAddSubCategories(subCategories)
         return ResponseEntity.ok(mapOf("message" to "SubCategories seeded successfully"))
@@ -67,8 +67,8 @@ class SubCategoryController (
 
     @PutMapping("/{id}")
     fun updateSubCategoryById(@PathVariable("id") @Valid id: Long, @RequestBody subCategory: SubCategory): ResponseEntity<Map<String, String>> {
-        val updatedSubCategory = subCategoryService.updateSubCategoryById(id, subCategory)
-        return if (updatedSubCategory != null) {
+        val updatedSubcategory = subCategoryService.updateSubCategoryById(id, subCategory)
+        return if (updatedSubcategory != null) {
             ResponseEntity.ok(mapOf("message" to "SubCategory updated successfully", "id" to id.toString()))
         } else {
             ResponseEntity.ok(mapOf("message" to "SubCategory not found", "id" to id.toString()))

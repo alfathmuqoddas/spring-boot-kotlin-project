@@ -14,7 +14,6 @@ data class SubCategory(
     @field:NotBlank(message = "SubCategory name cannot be blank")
     val name: String = "",
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    val category: Category? = null
+    @Column(nullable = false)
+    val category_id: Long = 0,
 )
