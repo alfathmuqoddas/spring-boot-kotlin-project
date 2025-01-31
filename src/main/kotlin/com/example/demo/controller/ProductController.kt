@@ -3,6 +3,7 @@ package com.example.demo.controller
 import com.example.demo.model.Product
 import com.example.demo.dto.ProductDTO
 import com.example.demo.service.ProductService
+import com.example.demo.common.productsBulk
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.HttpStatus
@@ -60,7 +61,18 @@ class ProductController (private val productService: ProductService) {
     fun bulkAddProducts(@RequestBody @Valid products: List<ProductDTO>): ResponseEntity<Map<String, String>> {
         val savedProducts = productService.bulkAddProducts(products)
         return ResponseEntity.ok(mapOf("message" to "Products added successfully", "count" to savedProducts.size.toString()))
-    }   
+    }
+
+    @PostMapping("/seed")
+    fun seedProducts(): ResponseEntity<Map<String, String>> {
+        productService.bulkAddProducts(productsBulk)
+        return try {
+            ResponseEntity.ok(mapOf("message" to "Products seeded successfully"))
+        } catch (ex: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mapOf("message" to "Failed to seed products due to an unknown error"))
+        }
+        
+    }
     
     @PutMapping("/{id}")
     fun updateProductById(@PathVariable("id") @Valid id: Long, @RequestBody product: Product): ResponseEntity<Map<String, String>> {
