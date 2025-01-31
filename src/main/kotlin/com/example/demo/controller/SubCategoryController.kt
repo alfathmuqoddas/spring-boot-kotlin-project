@@ -12,6 +12,7 @@ import org.springframework.dao.DataAccessException
 import com.example.demo.dto.CategoryDTO
 import com.example.demo.dto.BulkSubCategoryDTO
 // import com.example.demo.repository.CategoryRepository
+import com.example.demo.common.seedSubCategories
 
 @RestController
 @RequestMapping("/api/v1/subcategories")
@@ -46,22 +47,7 @@ class SubCategoryController (
     //seed the data
     @PostMapping("/seed")
     fun seedSubCategories(): ResponseEntity<Map<String, String>> {
-        val subCategories = listOf(
-            BulkSubCategoryDTO(name = "Fruits", categoryId = 1),
-            BulkSubCategoryDTO(name = "Vegetables", categoryId = 1),
-            BulkSubCategoryDTO(name = "Herb & Spices", categoryId = 1),
-            BulkSubCategoryDTO(name = "Milk & Milk Alternatives", categoryId = 2),
-            BulkSubCategoryDTO(name = "Cheese & Butter", categoryId = 2),
-            BulkSubCategoryDTO(name = "Yogurt & Cream", categoryId = 2),
-            BulkSubCategoryDTO(name = "Poultry", categoryId = 3),
-            BulkSubCategoryDTO(name = "Red Meat", categoryId = 3),
-            BulkSubCategoryDTO(name = "Seafood", categoryId = 3),
-            BulkSubCategoryDTO(name = "Processed Meats", categoryId = 3),
-            BulkSubCategoryDTO(name = "Bread", categoryId = 4),
-            BulkSubCategoryDTO(name = "Pastries & Desserts", categoryId = 4),
-            BulkSubCategoryDTO(name = "Tortillas & Wraps", categoryId = 4),
-        )
-        subCategoryService.bulkAddSubCategories(subCategories)
+        subCategoryService.bulkAddSubCategories(seedSubCategories)
         return ResponseEntity.ok(mapOf("message" to "SubCategories seeded successfully"))
     }
 

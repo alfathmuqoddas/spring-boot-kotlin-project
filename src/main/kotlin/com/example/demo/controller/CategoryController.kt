@@ -10,6 +10,7 @@ import jakarta.validation.Valid
 import org.springframework.dao.DataAccessException
 // import com.example.demo.dto.CategoryDTO
 import com.example.demo.dto.BulkCategoryDTO
+import com.example.demo.common.seedCategories
 
 
 @RestController
@@ -126,19 +127,7 @@ class CategoryController (private val categoryService: CategoryService) {
     //seed the data
     @PostMapping("/seed")
     fun seedCategories(): ResponseEntity<ApiResponse> {
-        val categories = listOf(
-            BulkCategoryDTO(name = "Fresh Produce"),
-            BulkCategoryDTO(name = "Dairy & Eggs"),
-            BulkCategoryDTO(name = "Meat & Seafood"),
-            BulkCategoryDTO(name = "Bakery & Bread"),
-            BulkCategoryDTO(name = "Frozen Foods"),
-            BulkCategoryDTO(name = "Pantry Staples"),
-            BulkCategoryDTO(name = "Snacks & Beverages"),
-            BulkCategoryDTO(name = "Health & Organic Products"),
-            BulkCategoryDTO(name = "Household Essentials"),
-            BulkCategoryDTO(name = "Baby & Personal Care"),
-        )
-        categoryService.bulkAddCategories(categories)
+        categoryService.bulkAddCategories(seedCategories)
         return try {
             ResponseEntity.ok(
                 ApiResponse(

@@ -1,6 +1,8 @@
 package com.example.demo.common
 
 import com.example.demo.dto.ProductDTO
+import com.example.demo.dto.BulkCategoryDTO
+import com.example.demo.dto.BulkSubCategoryDTO
 
 val productsBulk = listOf(
             // Fresh Produce - Fruits (Category ID: 1, Subcategory ID: 1)
@@ -68,3 +70,32 @@ val productsBulk = listOf(
             ProductDTO(name = "Baby Wipes", price = 4.99, quantity = 10, categoryId = 10, subcategoryId = 27),
             ProductDTO(name = "Shampoo", price = 6.49, quantity = 8, categoryId = 10, subcategoryId = 28)
 )
+
+val seedCategories = listOf(
+            BulkCategoryDTO(name = "Fresh Produce"),
+            BulkCategoryDTO(name = "Dairy & Eggs"),
+            BulkCategoryDTO(name = "Meat & Seafood"),
+            BulkCategoryDTO(name = "Bakery & Bread"),
+            BulkCategoryDTO(name = "Frozen Foods"),
+            BulkCategoryDTO(name = "Pantry Staples"),
+            BulkCategoryDTO(name = "Snacks & Beverages"),
+            BulkCategoryDTO(name = "Health & Organic Products"),
+            BulkCategoryDTO(name = "Household Essentials"),
+            BulkCategoryDTO(name = "Baby & Personal Care"),
+        )
+
+val seedSubCategories = listOf(
+            BulkSubCategoryDTO(name = "Fruits", categoryId = 1),
+            BulkSubCategoryDTO(name = "Vegetables", categoryId = 1),
+            BulkSubCategoryDTO(name = "Herb & Spices", categoryId = 1),
+            BulkSubCategoryDTO(name = "Milk & Milk Alternatives", categoryId = 2),
+            BulkSubCategoryDTO(name = "Cheese & Butter", categoryId = 2),
+            BulkSubCategoryDTO(name = "Yogurt & Cream", categoryId = 2),
+            BulkSubCategoryDTO(name = "Poultry", categoryId = 3),
+            BulkSubCategoryDTO(name = "Red Meat", categoryId = 3),
+            BulkSubCategoryDTO(name = "Seafood", categoryId = 3),
+            BulkSubCategoryDTO(name = "Processed Meats", categoryId = 3),
+            BulkSubCategoryDTO(name = "Bread", categoryId = 4),
+            BulkSubCategoryDTO(name = "Pastries & Desserts", categoryId = 4),
+            BulkSubCategoryDTO(name = "Tortillas & Wraps", categoryId = 4),
+        )
