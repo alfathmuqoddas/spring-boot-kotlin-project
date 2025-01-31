@@ -1,12 +1,21 @@
 package com.example.demo.model
 
 import jakarta.persistence.*
+
 import com.example.demo.model.Category
 import com.example.demo.model.SubCategory
+
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
+
+import java.time.LocalDateTime
+
 @Entity
+@EntityListeners(AuditingEntityListener::class)
 data class Product(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +38,12 @@ data class Product(
 
     @Column(name="subcategory_id", nullable = false)
     val subcategoryId: Long = 0,
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    var createdDate: LocalDateTime? = null,
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    var updatedDate: LocalDateTime? = null,
 )
